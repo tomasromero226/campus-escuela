@@ -1,0 +1,235 @@
+/* =====================================================================
+   ARCHIVO: style.css
+   PARA QUÉ SIRVE: define el aspecto visual de TODO el sitio.
+   Se carga en cada página con: <link rel="stylesheet" href="style.css">
+   ===================================================================== */
+
+
+/* ---------- 0) FUENTE DE TÍTULOS (Oswald) ----------
+   Oswald se descarga de Google Fonts, por eso necesita internet.
+   Si no hay conexión, el navegador usa la fuente alternativa (Arial Narrow). */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&display=swap');
+
+
+/* ---------- 1) VARIABLES: COLORES Y FUENTES DE LA ESCUELA ----------
+   AQUÍ SE CAMBIAN LOS COLORES Y FUENTES DE TODO EL SITIO.
+   (En SCSS las variables empiezan con $; en CSS normal empiezan con --
+    y se usan así: var(--primary) )                                       */
+:root {
+    --primario:       #fff;
+    --color-pared:    white;                 /* Fondo de las secciones claras */
+    --font-title:     "Oswald", "Arial Narrow", sans-serif;
+    --dark:           #111016;               /* Barra superior */
+    --medium:         #121119;               /* Pie de página */
+    --primary:        #a2132f;               /* Rojo principal: botones, detalles */
+    --secondary:      #05274c;               /* Azul oscuro: títulos */
+    --color-school:   #750E21;               /* Bordó de la escuela */
+    --box-shadow-cards: #a2132f;             /* Color de la sombra de las tarjetas */
+    --font-text:      "Times New Roman", Times, serif;
+    --color-date:     rgba(255 255 255 / 0.4);
+    --color-text:     #fff;
+
+    /* Colores auxiliares (derivados de los anteriores) */
+    --color-gris:     #f4f1f2;               /* Secciones alternas */
+    --color-texto-oscuro: #1f1f24;           /* Texto sobre fondo claro */
+    --color-error:    #b91c1c;
+    --radio:          12px;                  /* Redondeo de esquinas */
+    --sombra:         0 4px 14px color-mix(in srgb, var(--box-shadow-cards) 25%, transparent);
+    --sombra-fuerte:  0 10px 24px color-mix(in srgb, var(--box-shadow-cards) 40%, transparent);
+}
+
+
+/* ---------- 2) REINICIO Y BASE ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: var(--font-text);
+    font-size: 1.05rem;
+    background: var(--color-pared);
+    color: var(--color-texto-oscuro);
+    line-height: 1.6;
+}
+
+/* Botones y campos de formulario heredan la fuente del sitio */
+button, input { font-family: inherit; }
+
+a { color: var(--primary); }
+
+/* Todos los títulos usan la fuente Oswald */
+h1, h2, h3 { font-family: var(--font-title); line-height: 1.25; color: var(--secondary); font-weight: 600; }
+
+/* Contenedor centrado que limita el ancho del contenido */
+.contenedor { width: 90%; max-width: 1100px; margin: 0 auto; }
+
+
+/* ---------- 3) BOTONES ---------- */
+.boton {
+    display: inline-block;
+    background: var(--primary);
+    color: var(--color-text);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-family: var(--font-title);
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.15s, filter 0.15s;
+}
+.boton:hover { transform: translateY(-2px); filter: brightness(1.12); }
+.boton--chico { padding: 8px 16px; font-size: 0.9rem; }
+.boton--borde { background: transparent; border: 2px solid var(--primario); color: var(--primario); }
+
+/* Sobre fondos oscuros o rojos el botón se ve blanco con letras rojas */
+.hero .boton,
+.barra .boton:not(.boton--borde) { background: var(--primario); color: var(--primary); }
+
+
+/* ---------- 4) BARRA DE NAVEGACIÓN ---------- */
+.barra { background: var(--dark); border-bottom: 3px solid var(--primary); position: sticky; top: 0; z-index: 10; }
+.barra__interior {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px; padding: 10px 0;
+}
+.barra__logo {
+    display: flex; align-items: center; gap: 10px;           /* Logo + nombre en una fila */
+    color: var(--color-text); font-family: var(--font-title);
+    font-weight: 600; font-size: 1.3rem; text-decoration: none;
+}
+.barra__menu { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.barra__menu a:not(.boton) { color: #e5e5ea; text-decoration: none; font-family: var(--font-title); letter-spacing: 0.4px; }
+.barra__menu a:not(.boton):hover { color: #fff; }
+.barra__usuario { color: var(--color-text); font-size: 0.95rem; }
+
+
+/* ---------- 4b) LOGO DE LA ESCUELA ----------
+   AQUÍ SE CAMBIA EL TAMAÑO DEL LOGO (altura en píxeles) */
+.logo { height: 42px; width: auto; display: block; }        /* Logo chico de la barra */
+.logo--login { height: 70px; margin: 0 auto 8px; }          /* Logo de login y registro */
+
+
+/* ---------- 5) ENCABEZADO PRINCIPAL (HERO) ---------- */
+.hero { background: linear-gradient(135deg, var(--color-school), var(--primary)); color: var(--color-text); padding: 60px 0; }
+.hero__interior {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+}
+.hero h1 { color: var(--color-text); font-size: 2.4rem; margin-bottom: 16px; }
+.hero p { margin-bottom: 24px; color: rgba(255 255 255 / 0.92); }
+.hero__foto img { width: 100%; border-radius: var(--radio); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35); }
+
+/* Recuadro que marca dónde va la foto (se borra al poner la foto real) */
+.foto-pendiente {
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px dashed rgba(255, 255, 255, 0.6);
+    border-radius: var(--radio);
+    min-height: 240px;
+    display: flex; align-items: center; justify-content: center;
+    text-align: center; padding: 20px;
+}
+
+
+/* ---------- 6) SECCIONES DE CONTENIDO ---------- */
+.seccion { padding: 60px 0; background: var(--color-pared); }
+.seccion--gris { background: var(--color-gris); }
+.seccion h2 { font-size: 1.9rem; margin-bottom: 10px; }
+.seccion__intro { margin-bottom: 28px; max-width: 700px; }
+
+.aviso {
+    background: #fdecef; border-left: 5px solid var(--primary);
+    padding: 16px 20px; border-radius: 8px;
+}
+
+
+/* ---------- 7) TARJETAS (talleres y cursos) ---------- */
+.tarjetas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+.tarjetas--chicas { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+
+.tarjeta {
+    background: #fff; padding: 24px; border-radius: var(--radio);
+    box-shadow: var(--sombra); text-align: center;
+    border-bottom: 4px solid var(--primary);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.tarjeta:hover { transform: translateY(-4px); box-shadow: var(--sombra-fuerte); }
+.tarjeta__icono { font-size: 2.4rem; margin-bottom: 8px; }
+.tarjeta h3 { font-size: 1.15rem; margin-bottom: 6px; }
+
+
+/* ---------- 8) PIE DE PÁGINA ---------- */
+.pie { background: var(--medium); color: var(--color-date); text-align: center; padding: 24px 0; font-size: 0.9rem; border-top: 3px solid var(--primary); }
+
+
+/* ---------- 9) PÁGINA DE LOGIN Y REGISTRO ---------- */
+.fondo-login {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, var(--dark), var(--color-school)); padding: 20px;
+}
+.login {
+    background: #fff; width: 100%; max-width: 420px; padding: 32px;
+    border-radius: var(--radio); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    border-top: 5px solid var(--primary);
+}
+.login h1 { text-align: center; font-size: 1.7rem; }
+.login__sub { text-align: center; margin-bottom: 18px; color: #6b7280; }
+.login__volver { text-align: center; margin-top: 18px; }
+
+/* Pestañas de rol */
+.pestanas { display: flex; gap: 6px; margin-bottom: 18px; }
+.pestana {
+    flex: 1; padding: 10px; border: 2px solid var(--color-gris); background: var(--color-gris);
+    border-radius: 8px; cursor: pointer; font-family: var(--font-title); letter-spacing: 0.4px; color: #4b5563;
+}
+.pestana.activa { background: var(--primary); border-color: var(--primary); color: var(--color-text); }
+
+/* Formularios (los muestra/oculta el JavaScript de login.php y registro.php) */
+.formulario { display: none; }
+.formulario label { display: block; margin: 12px 0 4px; font-weight: 700; font-size: 0.95rem; }
+.formulario input[type="email"],
+.formulario input[type="text"],
+.formulario input[type="password"] {
+    width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1rem;
+}
+.formulario input:focus { outline: 3px solid rgba(162, 19, 47, 0.25); border-color: var(--primary); }
+.formulario small { display: block; color: #6b7280; margin-top: 4px; }
+.formulario .boton { width: 100%; margin-top: 18px; }
+
+.error {
+    background: #fee2e2; color: var(--color-error); padding: 10px 14px;
+    border-radius: 8px; margin-bottom: 14px; font-weight: 700;
+}
+.prueba { margin-top: 18px; font-size: 0.85rem; color: #6b7280; background: #f1f5f9; padding: 10px; border-radius: 8px; }
+
+/* Mensaje de éxito del registro */
+.exito {
+    background: #dcfce7; color: #166534; padding: 12px 14px;
+    border-radius: 8px; margin-bottom: 14px; font-weight: 700;
+}
+.exito a { color: #166534; }
+.exito__prueba {
+    margin-top: 10px; padding: 10px; background: #fff; border: 1px dashed #16a34a;
+    border-radius: 8px; font-weight: 400; color: #14532d; word-break: break-all;
+}
+
+
+/* ---------- 10) PANEL DE USUARIO (dashboard) ---------- */
+.panel { padding: 40px 0; }
+.panel h1 { margin-bottom: 6px; }
+
+.modulos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 24px; }
+.modulo {
+    background: #fff; padding: 28px; border-radius: var(--radio); box-shadow: var(--sombra);
+    text-decoration: none; color: var(--color-texto-oscuro); border-top: 5px solid var(--primary);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.modulo:hover { transform: translateY(-5px); box-shadow: var(--sombra-fuerte); }
+.modulo__icono { font-size: 2.2rem; display: block; margin-bottom: 8px; }
+.modulo h2 { font-size: 1.25rem; margin-bottom: 4px; }
+
+
+/* ---------- 11) ADAPTACIÓN A CELULARES ---------- */
+@media (max-width: 760px) {
+    .hero__interior { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 1.8rem; }
+}
